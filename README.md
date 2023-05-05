@@ -1,18 +1,7 @@
 Bookstore Web App
 =================
 
-This is my final project of the course “CS50’s Web Programming with Python and JavaScript". All necessary details are described below in [requirements](https://cs50.harvard.edu/web/2020/projects/final/capstone/) of this project.
-
-Distinctiveness and Complexity
-------------------------------
-
-This project is positioned as an online bookstore. He is different from project 2 "e-commerce" of the current course on the following key points:
-
-1.  **Database Architecture.** Bookstore presents it differently database architecture, user data is stored in a completely different way.
-2.  **Principle of operation.** Goods in the Bookstore are not unique in its single representation, as it was in Project 2 with lots. This allows the user to _multiple_ purchases of goods in _many instances_.
-3.  **Design.** Despite the use of the Bootstrap library in both projects, the Bookstore has a completely different design solution, corresponding to general ideas about the online store, and not online auction.
-
-The following describes the points that define complexity, uniqueness and convenience. web applications.
+This test project is positioned as an online bookstore. There are a pure JavaScript, HTML/CSS for the front end and Django — for the back end.
 
 ### Database architecture and data management
 
