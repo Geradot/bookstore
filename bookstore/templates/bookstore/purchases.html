@@ -1,0 +1,66 @@
+{% extends 'bookstore/layout.html' %} {% load static %} {% block body %}
+<div class="purchases container gap-3" id="purchases">
+  <section class="purchase-history">
+    <p class="h1">My Purchases</p>
+    <div class="d-flex flex-wrap gap-3">
+      <div class="details d-flex flex-column gap-3">
+        {% for purchase_pk, values in purchase_dict.items %}
+        <details>
+          <summary>{{values.date}}</summary>
+          <div class="table-responsive">
+            <table class="table border">
+              <thead>
+                <tr>
+                  <th scope="col">Title</th>
+                  <th scope="col" class="text-start">Price</th>
+                  <th scope="col" class="text-center">Amount</th>
+                  <th scope="col" class="text-end">Total</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for item in values.items %}
+                <tr data-id="{{item.book.id}}">
+                  <td
+                    scope="row"
+                    class="d-flex gap-3 align-items-center justify-content-between"
+                  >
+                    <a href="{% url 'book' item.book.id %}"
+                      >{{item.book.title}}</a
+                    >
+                  </td>
+                  <td class="text-start">${{item.book.price}}</td>
+                  <td class="text-center">{{item.quantity}}</td>
+                  <td class="text-end">${{item.subtotal}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          <p class="fw-bold text-end" style="padding-right: 8px">
+            Total: ${{values.total_price}}
+          </p>
+        </details>
+        {% empty %}
+        <p class="alert alert-info h4">You haven't bought any books yet</p>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+  {% if favorite_category != None %}
+  <section class="favorite-category">
+    <p class="fs-4">Your favorite category is</p>
+    {% if favorite_category.length > 1 %}
+    <ul>
+      {% for category, num_books in favorite_category.items %}
+      <li class="fs-4">{{ category }} - {{ num_books }} books</li>
+      {% endfor %}
+    </ul>
+    {% else %} {% for category, num_books in favorite_category.items %}
+    <p class="fs-4 alert alert-info">
+      <span class="fw-bold">{{ category }}</span> (bought {{ num_books }} books)
+    </p>
+    {% endfor %} {% endif %}
+  </section>
+  {% endif %}
+</div>
+{% endblock %}

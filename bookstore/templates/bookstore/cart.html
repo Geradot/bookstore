@@ -1,0 +1,138 @@
+{% extends "bookstore/layout.html"%} {% load static %} 
+{% block body %} 
+{% if cart is None or purchase is None %}
+<div
+  class="empty-cart container d-flex flex-column gap-3 justify-content-center align-items-center"
+>
+  <img
+    src="{% static 'bookstore/media/images/header/cart.svg' %}"
+    alt="Cart"
+    class="cart-icon"
+  />
+  <p class="display-6">Your cart is empty</p>
+</div>
+{% else %}
+<div
+  class="container d-flex flex-column col-xl-7 col-lg-8 col-md-9 col-sm-12 gap-3"
+  id="cart"
+>
+  <div
+    class="modal fade"
+    id="exampleModalToggle"
+    aria-hidden="true"
+    aria-labelledby="exampleModalToggleLabel"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title fs-5" id="exampleModalToggleLabel">Your email</p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <form id="purchase-form">
+            <div class="modal-body d-flex flex-column gap-2">
+                <label>Confirm or edit your email</label>
+                <input type="email" value="{{request.user.email}}" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+            <button
+                type="submit"
+                class="btn btn-primary"
+                data-bs-target="#ModalToggle2"
+                data-bs-toggle="modal"
+            >
+                Send me the bill 
+            </button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div
+    class="modal fade"
+    id="ModalToggle2"
+    aria-hidden="true"
+    aria-labelledby="ModalToggleLabel2"
+    tabindex="-1"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <p class="modal-title fs-5" id="ModalToggleLabel2">
+            Done!
+          </p>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+            You have successfully paid for the purchase.<br>Check your email for the details
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-primary"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          >
+            Close 
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    data-bs-target="#exampleModalToggle"
+    data-bs-toggle="modal"
+    class="btn btn-success align-self-end purchase-button"
+  >
+    Purchase
+  </button>
+  <div class="table-responsive">
+    <table class="table border">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col" class="text-start">Price</th>
+          <th scope="col" class="text-center">Amount</th>
+          <th scope="col" class="text-end">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for item in cart %}
+        <tr data-id="{{item.book.id}}">
+          <td
+            scope="row"
+            class="d-flex gap-3 align-items-center justify-content-between"
+          >
+            <a href="{% url 'book' item.book.id %}">{{item.book.title}}</a>
+            <a
+              class="link-danger d-flex"
+              data-id="{{item.book.id}}"
+            >
+              <img class="remove-icon" src="{% static 'bookstore/media/images/trash.svg' %}" alt='Remove'>
+            </a>
+          </td>
+          <td class="text-start">${{item.book.price}}</td>
+          <td class="text-center">{{item.quantity}}</td>
+          <td class="text-end">${{item.subtotal}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="fw-bold text-end" style="padding-right: 8px">
+    Total: ${{purchase.total_price}}
+  </p>
+</div>
+{% endif %}
+<script src="{% static 'bookstore/js/cart.js' %}"></script>
+{% endblock %}

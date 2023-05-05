@@ -1,0 +1,147 @@
+{% extends "bookstore/layout.html" %}
+{% load static %}
+{% block body %}
+<div class="container specific-book gap-3" data-id="{{book.id}}">
+    <section class="specific-book__cover">
+        <img 
+            class="" 
+            src="{{book.image_url}}" 
+            alt="{{book.title}}"
+        >
+    </section>
+    <section class="specific-book__meta">
+        <h1 class="h5">{{book.title}}</h1>
+        <table>
+            <tr>
+                <td>Author:</td>
+                <td class="fst-italic">{{book.author}}</td>
+            </tr>
+            <tr>
+                <td>Category:</td>
+                <td class="fw-bold">{{book.category}}</td>
+            </tr>
+            <tr>
+                <td>Short description:</td>
+                <td class="fst-italic">{{book.short_description}}</td>
+            </tr>
+        </table>
+    </section>
+    <section class="
+        specific-book__order
+        d-flex
+        flex-column
+        gap-2
+        p-2"
+    >
+        <div class="
+            specific-book__order_price
+            d-flex
+            fw-bold
+            gap-2
+            justify-content-between"
+        >
+            <span class="my-auto">Price</span>
+            <span>
+                $<span class="book-price">{{book.price}}</span>
+            </span>
+        </div>
+        <div class="
+            specific-book__order_amount
+            d-flex
+            gap-2
+            justify-content-between"
+        >
+            <div class="amount__text-block d-flex gap-1">
+                <label 
+                    for="amount" 
+                    class="fw-bold my-auto"
+                >Amount</label>
+                {% if amount is not 0%}
+                <span class="d-flex my-auto text-amount-in-cart">
+                    (in cart:&nbsp;<span>{{amount}}</span>)
+                </span>
+                {% endif %}
+            </div>
+            <div class="amount_input d-flex gap-2">
+                <button 
+                    class="
+                        decrement
+                        btn
+                        btn-secondary
+                        fw-bold"
+                >-</button>
+                {% if purchase_item is not None %}
+                <input 
+                    id="amount"
+                    class="form-control"
+                    type="text"
+                    min="1"
+                    value="{{purchase_item.quantity}}"
+                    max="42"
+                >
+                {% else %}
+                <input 
+                    id="amount"
+                    class="form-control"
+                    type="text"
+                    min="1"
+                    value="1"
+                    max="42"
+                >
+                {% endif %}
+                <button 
+                    class="
+                        increment
+                        btn
+                        btn-secondary
+                        fw-bold"
+                >+</button>
+            </div>
+        </div>
+        <div class="
+            specific-book__order_total-price
+            d-flex
+            fw-bold
+            justify-content-between"
+        >
+            <span>Total price:</span>
+            <span>$<span class="total-price">{% if purchase_item is not None %}{{ purchase_item.subtotal}}{% else %}{{book.price}}{% endif %}</span>
+        </div>
+        {% if user.is_authenticated %}
+        <div class="
+            specific-book__order_buttons
+            d-flex
+            gap-2
+            justify-content-between"
+        >
+            {% if is_in_cart %}
+            <button 
+                class="btn btn-success change-amount"
+            >Change amount</button> 
+            <button
+                class="btn btn-danger remove-from-cart"
+            >Remove from Cart</button>
+            {% else %}
+            <button 
+                class="btn btn-success add-to-cart"
+            >Add to Cart</button> 
+            {% endif %}
+        </div>
+        {% else %}
+        <p class="alert alert-dark align-self-center">
+            <a 
+                class="link-dark" 
+                href="/login">Login</a> to add to Cart
+        </p>
+        {% endif %}
+    </section>
+    <section class="specific-book__description">
+        <details>
+            <summary>Full description</summary>
+            <p>{{book.description}}</p>
+        </details>
+    </section>
+    <script src="{% static 'bookstore/js/book.js' %}">
+    </script>
+</div>
+{% endblock %}

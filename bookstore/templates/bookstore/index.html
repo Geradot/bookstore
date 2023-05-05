@@ -1,0 +1,57 @@
+{% extends "bookstore/layout.html" %} {% load static %} {% block body %}
+<div class="d-flex container flex-column gap-3">
+  <div class="top-fields d-flex justify-content-center gap-3">
+    <input
+      type="search"
+      class="form-control"
+      id="search-bar"
+      placeholder="Search book by title..."
+    />
+    <select
+      class="form-select justify-self-start"
+      aria-label="Choose a price"
+      id="filter-price"
+    >
+      <option value="all">All price</option>
+      <option value="0-15">to $14.99</option>
+      <option value="15-25">from $15 to $24.99</option>
+      <option value="25+">above $25</option>
+    </select>
+    <select
+      class="form-select justify-self-start"
+      aria-label="Choose a category"
+      id="filter-category"
+    >
+      <option value="all">All categories</option>
+      {% for category in categories %}
+      <option value="{{category.name}}">{{category.name}}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <section class="d-flex justify-content-center flex-wrap gap-3" id="book-list">
+    {% for book in books %}
+    <div class="card" data-category="{{book.category.name}}">
+      <div class="card-img-top">
+        <a href="{% url 'book' book.id %}">
+          <img class="pt-3" src="{{book.image_url}}" />
+        </a>
+      </div>
+      <div class="card-body">
+        <div class="card-title fw-bold">{% if book.title|length > 24 %}{{ book.title|slice:":21" }}...{% else %}{{ book.title }}{% endif %}</div>
+        <div class="card-subtitle text-muted">{{book.author}}</div>
+      </div>
+      <div class="d-flex justify-content-between card-footer">
+        <div class="card-footer__price my-auto">$<span>{{book.price}}</span></div>
+        <a href="{% url 'book' book.id %}" class="btn btn-outline-secondary"
+          >View</a
+        >
+      </div>
+    </div>
+    {% endfor %}
+  </section>
+  <div class="justify-content-center fs-5" id="no-results">
+    Books were not found...
+  </div>
+</div>
+<script src="{% static 'bookstore/js/books.js' %}"></script>
+{% endblock %}
