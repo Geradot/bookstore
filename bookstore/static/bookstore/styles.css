@@ -177,12 +177,12 @@ caption {
   }
 }
 
-@media (max-width: 552px) {
+/* @media (max-width: 552px) {
   .card {
     width: 250px;
     height: 400px;
   }
-}
+} */
 /*********************
 *** Specific Book ****
 *********************/
