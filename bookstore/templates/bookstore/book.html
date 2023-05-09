@@ -67,7 +67,7 @@
                     class="
                         decrement
                         btn
-                        btn-secondary
+                        btn-my-success
                         fw-bold"
                 >-</button>
                 {% if purchase_item is not None %}
@@ -93,7 +93,7 @@
                     class="
                         increment
                         btn
-                        btn-secondary
+                        btn-my-success
                         fw-bold"
                 >+</button>
             </div>
@@ -116,14 +116,14 @@
         >
             {% if is_in_cart %}
             <button 
-                class="btn btn-success change-amount"
+                class="btn btn-secondary change-amount"
             >Change amount</button> 
             <button
-                class="btn btn-danger remove-from-cart"
+                class="btn btn-dark remove-from-cart"
             >Remove from Cart</button>
             {% else %}
             <button 
-                class="btn btn-success add-to-cart"
+                class="btn btn-secondary add-to-cart"
             >Add to Cart</button> 
             {% endif %}
         </div>

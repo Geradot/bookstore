@@ -77,7 +77,7 @@ buttonsBlock?.addEventListener("click", (e) => {
     document.querySelector(".amount__text-block").removeChild(textAmountInCart);
     buttonsBlock.removeChild(changeAmount);
     buttonsBlock.removeChild(removeFromCart);
-    addToCart = createButton("Add to Cart", "add-to-cart", "success");
+    addToCart = createButton("Add to Cart", "add-to-cart", "secondary");
     buttonsBlock.appendChild(addToCart);
   } else if (e.target.matches("button.change-amount")) {
     changeAmountItem(e);
@@ -107,9 +107,9 @@ function addItem() {
       removeFromCart = createButton(
         "Remove from Cart",
         "remove-from-cart",
-        "danger"
+        "dark"
       );
-      changeAmount = createButton("Change amount", "change-amount", "success");
+      changeAmount = createButton("Change amount", "change-amount", "secondary");
 
       buttonsBlock.removeChild(addToCart);
       buttonsBlock.appendChild(changeAmount);

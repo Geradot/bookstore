@@ -1,7 +1,7 @@
 {% extends 'bookstore/layout.html' %} {% load static %} {% block body %}
 <div class="purchases container gap-3" id="purchases">
   <section class="purchase-history">
-    <p class="h1">My Purchases</p>
+    <p class="h1 text-darker-green">My Purchases</p>
     <div class="d-flex flex-wrap gap-3">
       <div class="details d-flex flex-column gap-3">
         {% for purchase_pk, values in purchase_dict.items %}
@@ -41,14 +41,14 @@
           </p>
         </details>
         {% empty %}
-        <p class="alert alert-info h4">You haven't bought any books yet</p>
+        <p class="alert my-alert-info h4">You haven't bought any books yet</p>
         {% endfor %}
       </div>
     </div>
   </section>
   {% if favorite_category != None %}
   <section class="favorite-category">
-    <p class="fs-4">Your favorite category is</p>
+    <p class="fs-4 text-darker-green">Your favorite category is</p>
     {% if favorite_category.length > 1 %}
     <ul>
       {% for category, num_books in favorite_category.items %}
@@ -56,7 +56,7 @@
       {% endfor %}
     </ul>
     {% else %} {% for category, num_books in favorite_category.items %}
-    <p class="fs-4 alert alert-info">
+    <p class="fs-4 alert my-alert-info">
       <span class="fw-bold">{{ category }}</span> (bought {{ num_books }} books)
     </p>
     {% endfor %} {% endif %}
